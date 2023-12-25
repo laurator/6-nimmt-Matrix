@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+           .boton {
+                width: 10%;
+                height: 50px;
+                font-size: 30px;
+           }
+
+           .eliminated {
+                background-color: gray !important;
+            }
+
+            .light-button {
+                background-color: lightgray;
+            }
+
+            .my-numbers {
+                background-color: orange/*rgb(255, 255, 69)*/ !important;
+            }
+
+            .puntuacion {
+                display: inline-grid;
+            }
+
+            /* Styles of buttons depending on its number */
+            .fifty-five {
+                background-color: rgba(192, 192, 0, 0.129);
+            }
+
+            .five-multiples {
+                background-color: rgba(20, 88, 155, 0.129);
+            }
+
+            .ten-multiples {
+                background-color: rgba(65, 131, 0, 0.129)
+            }
+
+            .palindromic {
+                background-color: rgba(153, 0, 0, 0.129);
+            }
+
+            /* Highlight the colors of the styles of buttons depending on its number */
+            .fifty-five-highlight {
+                background-color: yellow;
+                /* Text color and border */
+                color: red;
+                text-shadow: 2px 2px 5px black;
+            }
+
+            .five-multiples-highlight {
+                background-color: dodgerblue;
+                /* Text color and border */
+                color: rgb(51, 209, 201);
+                text-shadow: 2px 2px 5px black;
+            }
+
+            .ten-multiples-highlight {
+                background-color: rgb(10, 197, 10);
+                /* Text color and border */
+                color: yellow;
+                text-shadow: 2px 2px 5px black;
+            }
+
+            .palindromic-highlight {
+                background-color: red;
+                /* Text color and border */
+                color: greenyellow;
+                text-shadow: 2px 2px 5px black;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h1>Matriz de botones</h1>
+        <div id="button-container">
+
+        </div>
+
+        <input type="checkbox" id="showLossValues"/>
+        <label for="showLossValues">Marcar valores de pérdida</label>
+
+        <h3>Leyenda</h3>
+        <button class="light-button">Número sin marcar</button>
+        <button class="eliminated" style="font-weight: bold">Número marcado (clic izquierdo)</button>
+        <button class="my-numbers">Mis números (clic derecho)</button>
+
+        <h3>Puntuación</h3>
+            <div class="puntuacion">
+            <button class="fifty-five-highlight">7 puntos negativos</button>
+            <button class="palindromic-highlight">5 puntos negativos</button>
+            <button class="ten-multiples-highlight">3 puntos negativos</button>
+            <button class="five-multiples-highlight">2 puntos negativos</button>
+            <button class="light-button">1 punto negativo</button>
+        </div>
+
+        <p>Esta matriz es un apoyo para el juego de mesa "6 nimmt!"</p>
+
+        <img src="https://cf.geekdo-images.com/JFhLVSRFQ2mtWRNHgbZ3Wg__imagepage/img/pPJsr66A__xc_QmZDbBNsfEWl1I=/fit-in/900x600/filters:no_upscale():strip_icc()/pic2602138.jpg" height="300"/>
+
+        <script>
+        // Función auxiliar para transformar string en HTML
+        function htmlToElement(html) {
+            let template = document.createElement('template');
+            template.innerHTML = html.trim();
+            return template.content.firstChild;
+        }
+
+        function detectNumberStyle (i) {
+            var buttonNumberStyle = ""; // Vacío si no es ninguno de los casos
+            switch (i) { // Decidir la clase del botón a crear
+                case 55: buttonNumberStyle = "fifty-five"; break;
+                case 11:
+                case 22:
+                case 33:
+                case 44:
+                case 66:
+                case 77:
+                case 88:
+                case 99: buttonNumberStyle = "palindromic"; break; // Si sus 2 números son iguales
+                default:
+                    if (i%10 == 0) {
+                        buttonNumberStyle = "ten-multiples"; // Si es múltiplo de 10
+                    } else if (i%5 == 0) {
+                        buttonNumberStyle = "five-multiples"; // Si es múltiplo de 5
+                    } else {
+                        buttonNumberStyle = "light-button";
+                    }
+            }
+            return buttonNumberStyle;
+        }
+
+        function createHtmlButtons () {
+        // Crear botón (Creando todo el html directamente con función auxiliar)
+            var arrayHTMLelements = [];
+
+            // Crear todos los botones con su estilo de número como clase
+            for (var i=1; i<105; i++) {
+                var buttonNumberStyle = detectNumberStyle(i);
+                var botonesString = `<button class="boton ${buttonNumberStyle} not-my-numbers alive" id="boton${i}">${i}</button>`;
+                arrayHTMLelements.push(htmlToElement(botonesString));
+            }
+            return arrayHTMLelements;
+        }
+
+        document.getElementById("button-container").append(...createHtmlButtons());
+
+        /***************************************************************/
+        // Qué hacen los botones al ser clicados
+        document.querySelectorAll("#button-container .boton").forEach(function(element) {
+            //addEventListener sólo para el botón que se ha clicado dentro del conjunto de botones posibles
+            element.addEventListener("click", function() {
+                console.log('he clicado la posición tal: ', this.id);
+
+                // Cambiar tamaño y estilo de fuente
+                var myFont = window.getComputedStyle(this).getPropertyValue('font-weight');
+                if (myFont == "bold" || this.style.fontWeight == "bold") {
+                    // this.style.fontSize = "20px";
+                    this.style.fontWeight = "normal";
+                } else {
+                    // this.style.fontSize = "36px";
+                    this.style.fontWeight = "bold";
+                }
+
+                // Detectar estilo del botón y almacenarlo
+                var possibleButtonStyles = ["light-button", "fifty-five", "five-multiples", "ten-multiples", "palindromic"];
+                for (var i=0; i<possibleButtonStyles.length; i++) {
+                    if (this.classList.contains(possibleButtonStyles[i])) {
+                        var buttonStyle = possibleButtonStyles[i];
+                    }
+                }
+                // Cambiar color del fondo de los botones
+                if (this.classList.contains("alive")) {
+                    this.classList.replace("alive", "eliminated");              
+                } else {
+                    this.classList.replace("eliminated", "alive"); 
+                }
+            });
+
+
+            // Marcar mis números en otro color con el botón derecho
+            element.addEventListener("contextmenu", function() {
+                event.preventDefault(); // Evitar que aparezca el menú con las opciones
+                // Cambiar color del fondo de los botones
+                if (this.classList.contains("not-my-numbers")) {
+                    this.classList.replace("not-my-numbers", "my-numbers");              
+                } else {
+                    this.classList.replace("my-numbers", "not-my-numbers"); 
+                }
+            });
+        });
+
+        document.getElementById("showLossValues").addEventListener("change", function() {
+            if (this.classList.contains("checked")) { // Si está clicado
+                this.classList.remove("checked"); // Se elimina la marca de clicado
+                // Se eliminan las marcas de los colores de los botones
+                document.querySelectorAll(".fifty-five").forEach(function(element) {
+                    element.classList.remove("fifty-five-highlight");
+                });
+                document.querySelectorAll(".palindromic").forEach(function(element) {
+                    element.classList.remove("palindromic-highlight");
+                });
+                document.querySelectorAll(".ten-multiples").forEach(function(element) {
+                    element.classList.remove("ten-multiples-highlight");
+                });
+                document.querySelectorAll(".five-multiples").forEach(function(element) {
+                    element.classList.remove("five-multiples-highlight");
+                });
+
+            } else { // Si no estaba marcado como clicado
+                this.classList.add("checked"); // Se añade la marca de clicado
+                // Se añaden las marcas a los botones para destacar sus colores
+                document.querySelectorAll(".fifty-five").forEach(function(element) {
+                    element.classList.add("fifty-five-highlight");
+                });
+                document.querySelectorAll(".palindromic").forEach(function(element) {
+                    element.classList.add("palindromic-highlight");
+                });
+                document.querySelectorAll(".ten-multiples").forEach(function(element) {
+                    element.classList.add("ten-multiples-highlight");
+                });
+                document.querySelectorAll(".five-multiples").forEach(function(element) {
+                    element.classList.add("five-multiples-highlight");
+                });
+            }
+            
+        });
+        </script>
+
+    </body>
+</html> 
