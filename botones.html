@@ -5,7 +5,7 @@
         <style>
            .boton {
                 width: 10%;
-                height: 50px;
+                height: 10%/*50px*/;
                 font-size: 30px;
            }
 
@@ -13,7 +13,7 @@
                 background-color: gray !important;
             }
 
-            .light-button {
+            .alive {
                 background-color: lightgray;
             }
 
@@ -42,9 +42,14 @@
                 background-color: rgba(153, 0, 0, 0.129);
             }
 
+            .basic-button {
+                background-color: lightgray;
+            }
+
             /* Highlight the colors of the styles of buttons depending on its number */
             .fifty-five-highlight {
                 background-color: yellow;
+                font-size: 33px;
                 /* Text color and border */
                 color: red;
                 text-shadow: 2px 2px 5px black;
@@ -52,6 +57,7 @@
 
             .five-multiples-highlight {
                 background-color: dodgerblue;
+                font-size: 18px;
                 /* Text color and border */
                 color: rgb(51, 209, 201);
                 text-shadow: 2px 2px 5px black;
@@ -59,6 +65,7 @@
 
             .ten-multiples-highlight {
                 background-color: rgb(10, 197, 10);
+                font-size: 24px;
                 /* Text color and border */
                 color: yellow;
                 text-shadow: 2px 2px 5px black;
@@ -66,9 +73,17 @@
 
             .palindromic-highlight {
                 background-color: red;
+                font-size: 30px;
                 /* Text color and border */
                 color: greenyellow;
                 text-shadow: 2px 2px 5px black;
+            }
+
+            .basic-highlight {
+                background-color: #eadcea;
+                font-size: 14px;
+                /* Text color */
+                color: purple; ;
             }
         </style>
     </head>
@@ -83,17 +98,17 @@
         <label for="showLossValues">Marcar valores de pérdida</label>
 
         <h3>Leyenda</h3>
-        <button class="light-button">Número sin marcar</button>
+        <button class="alive">Número sin marcar</button>
         <button class="eliminated" style="font-weight: bold">Número marcado (clic izquierdo)</button>
         <button class="my-numbers">Mis números (clic derecho)</button>
 
         <h3>Puntuación</h3>
-            <div class="puntuacion">
+        <div class="puntuacion">
             <button class="fifty-five-highlight">7 puntos negativos</button>
             <button class="palindromic-highlight">5 puntos negativos</button>
             <button class="ten-multiples-highlight">3 puntos negativos</button>
             <button class="five-multiples-highlight">2 puntos negativos</button>
-            <button class="light-button">1 punto negativo</button>
+            <button class="basic-highlight">1 punto negativo</button>
         </div>
 
         <p>Esta matriz es un apoyo para el juego de mesa "6 nimmt!"</p>
@@ -108,6 +123,7 @@
             return template.content.firstChild;
         }
 
+        // Función para asignar el tipo de número correspondiente a cada botón
         function detectNumberStyle (i) {
             var buttonNumberStyle = ""; // Vacío si no es ninguno de los casos
             switch (i) { // Decidir la clase del botón a crear
@@ -126,12 +142,13 @@
                     } else if (i%5 == 0) {
                         buttonNumberStyle = "five-multiples"; // Si es múltiplo de 5
                     } else {
-                        buttonNumberStyle = "light-button";
+                        buttonNumberStyle = "basic-button";
                     }
             }
             return buttonNumberStyle;
         }
 
+        // Función para almacenar los elementos HTML de los botones a crear
         function createHtmlButtons () {
         // Crear botón (Creando todo el html directamente con función auxiliar)
             var arrayHTMLelements = [];
@@ -145,10 +162,14 @@
             return arrayHTMLelements;
         }
 
+        // Creación de los botones en su contenedor
         document.getElementById("button-container").append(...createHtmlButtons());
 
         /***************************************************************/
-        // Qué hacen los botones al ser clicados
+        // EVENTOS
+        /***************************************************************/
+
+        // Qué hacen los botones numéricos del contenedor al ser clicados
         document.querySelectorAll("#button-container .boton").forEach(function(element) {
             //addEventListener sólo para el botón que se ha clicado dentro del conjunto de botones posibles
             element.addEventListener("click", function() {
@@ -165,7 +186,7 @@
                 }
 
                 // Detectar estilo del botón y almacenarlo
-                var possibleButtonStyles = ["light-button", "fifty-five", "five-multiples", "ten-multiples", "palindromic"];
+                var possibleButtonStyles = ["alive", "fifty-five", "five-multiples", "ten-multiples", "palindromic"];
                 for (var i=0; i<possibleButtonStyles.length; i++) {
                     if (this.classList.contains(possibleButtonStyles[i])) {
                         var buttonStyle = possibleButtonStyles[i];
@@ -182,7 +203,7 @@
 
             // Marcar mis números en otro color con el botón derecho
             element.addEventListener("contextmenu", function() {
-                event.preventDefault(); // Evitar que aparezca el menú con las opciones
+                event.preventDefault(); // Evitar que aparezca el menú con las opciones del clic derecho
                 // Cambiar color del fondo de los botones
                 if (this.classList.contains("not-my-numbers")) {
                     this.classList.replace("not-my-numbers", "my-numbers");              
@@ -192,9 +213,11 @@
             });
         });
 
+        // Botón check "Marcar valores de pérdida"
         document.getElementById("showLossValues").addEventListener("change", function() {
             if (this.classList.contains("checked")) { // Si está clicado
                 this.classList.remove("checked"); // Se elimina la marca de clicado
+
                 // Se eliminan las marcas de los colores de los botones
                 document.querySelectorAll(".fifty-five").forEach(function(element) {
                     element.classList.remove("fifty-five-highlight");
@@ -208,9 +231,13 @@
                 document.querySelectorAll(".five-multiples").forEach(function(element) {
                     element.classList.remove("five-multiples-highlight");
                 });
+                document.querySelectorAll(".basic-button").forEach(function(element) {
+                    element.classList.remove("basic-highlight");
+                });
 
             } else { // Si no estaba marcado como clicado
                 this.classList.add("checked"); // Se añade la marca de clicado
+
                 // Se añaden las marcas a los botones para destacar sus colores
                 document.querySelectorAll(".fifty-five").forEach(function(element) {
                     element.classList.add("fifty-five-highlight");
@@ -223,6 +250,9 @@
                 });
                 document.querySelectorAll(".five-multiples").forEach(function(element) {
                     element.classList.add("five-multiples-highlight");
+                });
+                document.querySelectorAll(".basic-button").forEach(function(element) {
+                    element.classList.add("basic-highlight");
                 });
             }
             
