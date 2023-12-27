@@ -3,10 +3,14 @@
 <html>
     <head>
         <style>
+           .button-container {
+                display: flex;
+           }
            .boton {
-                width: 10%;
-                height: 10%/*50px*/;
+                width: 10%; /*170px*/
+                height: 45px; /*50px 10%*/
                 font-size: 30px;
+                vertical-align: middle;
            }
 
            .eliminated {
@@ -27,19 +31,19 @@
 
             /* Styles of buttons depending on its number */
             .fifty-five {
-                background-color: rgba(192, 192, 0, 0.129);
+                background-color: rgba(92, 92, 0, 0.129);
             }
 
             .five-multiples {
-                background-color: rgba(20, 88, 155, 0.129);
+                background-color: rgba(9, 42, 75, 0.129);
             }
 
             .ten-multiples {
-                background-color: rgba(65, 131, 0, 0.129)
+                background-color: rgba(31, 61, 0, 0.129)
             }
 
             .palindromic {
-                background-color: rgba(153, 0, 0, 0.129);
+                background-color: rgba(61, 0, 0, 0.129);
             }
 
             .basic-button {
@@ -49,7 +53,7 @@
             /* Highlight the colors of the styles of buttons depending on its number */
             .fifty-five-highlight {
                 background-color: yellow;
-                font-size: 33px;
+                font-size: 34px;
                 /* Text color and border */
                 color: red;
                 text-shadow: 2px 2px 5px black;
@@ -94,7 +98,7 @@
 
         </div>
 
-        <input type="checkbox" id="showLossValues"/>
+        <input type="checkbox" id="showLossValues" autocomplete="off"/>
         <label for="showLossValues">Marcar valores de pérdida</label>
 
         <h3>Leyenda</h3>
@@ -150,14 +154,13 @@
 
         // Función para almacenar los elementos HTML de los botones a crear
         function createHtmlButtons () {
-        // Crear botón (Creando todo el html directamente con función auxiliar)
             var arrayHTMLelements = [];
 
             // Crear todos los botones con su estilo de número como clase
             for (var i=1; i<105; i++) {
                 var buttonNumberStyle = detectNumberStyle(i);
                 var botonesString = `<button class="boton ${buttonNumberStyle} not-my-numbers alive" id="boton${i}">${i}</button>`;
-                arrayHTMLelements.push(htmlToElement(botonesString));
+                arrayHTMLelements.push(htmlToElement(botonesString)); // Crear botón (Creando todo el html directamente con función auxiliar)
             }
             return arrayHTMLelements;
         }
