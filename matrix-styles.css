@@ -1,0 +1,88 @@
+/* Estilos personalizados creados por Laura */
+
+.button-container {
+    display: flex;
+}
+.boton {
+    width: 10%; /*170px*/
+    height: 45px; /*50px 10%*/
+    font-size: 30px;
+    vertical-align: middle;
+}
+
+.eliminated {
+    background-color: gray !important;
+}
+
+.alive {
+    background-color: lightgray;
+}
+
+.my-numbers {
+    background-color: orange/*rgb(255, 255, 69)*/ !important;
+}
+
+.puntuacion {
+    display: inline-grid;
+}
+
+/* Styles of buttons depending on its number */
+.fifty-five {
+    background-color: rgba(92, 92, 0, 0.129);
+}
+
+.five-multiples {
+    background-color: rgba(9, 42, 75, 0.129);
+}
+
+.ten-multiples {
+    background-color: rgba(31, 61, 0, 0.129)
+}
+
+.palindromic {
+    background-color: rgba(61, 0, 0, 0.129);
+}
+
+.basic-button {
+    background-color: lightgray;
+}
+
+/* HIGHLIGHT the colors of the styles of buttons depending on its number */
+.fifty-five-highlight {
+    background-color: yellow;
+    font-size: 34px;
+    /* Text color and border */
+    color: red;
+    text-shadow: 2px 2px 5px black;
+}
+
+.five-multiples-highlight {
+    background-color: dodgerblue;
+    font-size: 18px;
+    /* Text color and border */
+    color: rgb(51, 209, 201);
+    text-shadow: 2px 2px 5px black;
+}
+
+.ten-multiples-highlight {
+    background-color: rgb(10, 197, 10);
+    font-size: 24px;
+    /* Text color and border */
+    color: yellow;
+    text-shadow: 2px 2px 5px black;
+}
+
+.palindromic-highlight {
+    background-color: red;
+    font-size: 30px;
+    /* Text color and border */
+    color: greenyellow;
+    text-shadow: 2px 2px 5px black;
+}
+
+.basic-highlight {
+    background-color: #eadcea;
+    font-size: 14px;
+    /* Text color */
+    color: purple; ;
+}
