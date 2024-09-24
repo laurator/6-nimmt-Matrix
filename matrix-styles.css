@@ -1,7 +1,9 @@
 /* Estilos personalizados creados por Laura */
 
-.button-container {
+.button-container, .informacion {
     display: flex;
+    justify-content: space-around;
+    text-align: center;
 }
 .boton {
     width: 10%; /*170px*/
