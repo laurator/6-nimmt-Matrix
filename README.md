@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/laurator/6-nimmt-Matrix">
-    <img src="https://cf.geekdo-images.com/JFhLVSRFQ2mtWRNHgbZ3Wg__imagepage/img/pPJsr66A__xc_QmZDbBNsfEWl1I=/fit-in/900x600/filters:no_upscale():strip_icc()/pic2602138.jpg" alt="Logo" width="" height="120">
+    <img src="https://cf.geekdo-images.com/JFhLVSRFQ2mtWRNHgbZ3Wg__imagepage/img/pPJsr66A__xc_QmZDbBNsfEWl1I=/fit-in/900x600/filters:no_upscale():strip_icc()/pic2602138.jpg" alt="Logo" width="" height="200">
   </a>
 
 <h3 align="center">6 nimmt Matrix</h3>
@@ -51,7 +51,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[JavaScript]: https://img.shields.io/badge/logo-javascript-blue?logo=javascript
+[JavaScript]: https://img.shields.io/badge/javascript-blue?logo=javascript
 [JavaScript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
 [CSS]: https://img.shields.io/badge/-CSS-blue
 [CSS-url]: https://developer.mozilla.org/en-US/docs/Web/CSS
+[HTML]: https://img.shields.io/badge/-HTML-blue
+[HTML-url]: https://developer.mozilla.org/en-US/docs/Web/HTML
