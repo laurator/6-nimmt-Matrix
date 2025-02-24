@@ -1,10 +1,24 @@
 /* Estilos personalizados creados por Laura */
 
+body {
+    background-image: url("Fondo.png");
+    background-repeat: repeat;
+}
+
+h1 {
+    text-align: center;
+}
+
 .button-container, .informacion {
     display: flex;
     justify-content: space-around;
     text-align: center;
 }
+
+#button-container {
+    background-color: white;
+}
+
 .boton {
     width: 10%; /*170px*/
     height: 45px; /*50px 10%*/
